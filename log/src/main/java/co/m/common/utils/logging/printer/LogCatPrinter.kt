@@ -1,6 +1,5 @@
 package co.m.common.utils.logging.printer
 
-import android.annotation.SuppressLint
 import android.util.Log.d
 import android.util.Log.e
 import android.util.Log.i
@@ -16,7 +15,6 @@ class LogCatPrinter(
     private val formatter: Formatter,
     override val filter: Filter
 ) : Printer() {
-    @SuppressLint("LogNotTimber")
 
     companion object {
         const val TAG = "Log"
