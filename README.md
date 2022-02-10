@@ -91,7 +91,7 @@ repositories {
 }
 
 dependencies {
-  implementation 'co.m.android:log:XX.XX.XX'
+  implementation 'co.m.android:log:x.y.z'
 }
 ```
 
