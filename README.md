@@ -1,26 +1,33 @@
 ![android-log](header.png)
 
+# Logging for Android
 This project aims to provide no-nonsense logging API that is easily extensible. 
 The goal of this project to not to be feature rich, but to provide a baseline for you to build on in your project.
 
 The members of the android function at M had different needs for logging. Some enjoy a nice and clean log while others like more verbose logging.
 With android-log we satisfied both needs.
 
-android-log consists of a few fundamental elements:
+## Project structure
+Logging for Android consists of a few fundamental elements:
 
+### Log class
 The `Log` class is the main interaction point of this library. 
 Inside it you will find those familiar log statement methods such as `Log.d()`
 
+### Printers
 `Log` directs the log messages to `Printer` implementations. Think of Printers as channels you print your statements to.
 Currently, the library includes `LogCatPrinter`, `NotificationPrinter` and `StandardOutPrinter` (for unit tests).
 
+### Filters
 To control what a `Printer` should output you pass an instance of `Filter`. You can combine different filters by using the infix functions
 `and` & `or`: for instance, `SimpleLogLevelFilter(Level.ERROR) and SimpleCategoryFilter(Categories.UI)` would only print messages with level *error* and above, and of the category *UI*.
 If you don't care about filters, you can pass the `AllowAllFilter` to your `Printer`.
 
+### Formatters
 A `Printer` uses a `Formatter` to control the format of the output. The formatter in the screenshot above is called `LogCatFormatterExtended`. 
 If you are directing your output to a file, we recommend using `SimpleFormatter`
 
+### Categories
 All log statement methods inside `Log` allow the passing of a log category. This can be used to order your statements into high level areas of interest.
 Want to know what is going on with your backend? Direct your network client log statements to the `Network` category, and enable only that category.
 
@@ -43,8 +50,7 @@ object Categories {
 }
 ```
 
-Usage
------
+## Usage
 
 ### Step 1
 ```kotlin
@@ -77,8 +83,7 @@ Usage
  Log.d("Initialising the flux capacitor", Categories.Flux)
 ```
 
-Download
---------
+## Download
 
 ```groovy
 repositories {
@@ -91,8 +96,7 @@ dependencies {
 ```
 
 
-License
--------
+## License
 
     Copyright 2022 Volvo Car Mobility AB
 
