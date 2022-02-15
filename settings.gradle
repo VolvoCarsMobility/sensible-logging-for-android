@@ -13,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Sensible logging for Android"
-include ':log'
+include ':sensible-logging'
