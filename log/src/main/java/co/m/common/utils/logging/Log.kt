@@ -120,7 +120,7 @@ object Log {
         processor.removePrinters(*printer)
     }
 
-    fun printers(vararg printer: Printer) {
+    fun addPrinters(vararg printer: Printer) {
         processor.addPrinters(*printer)
     }
 }
