@@ -1,6 +1,5 @@
 ![header-image](header.png)
 
-# Sensible logging for Android (*working name*)
 This project aims to provide no-nonsense logging API that is easily extensible. 
 The goal of this library is not to be rich in features, but to provide a baseline for you to build on in your own projects.
 
