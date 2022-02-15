@@ -4,16 +4,13 @@
  **/
 ext.lib_versions = [:]
 def versions = [:]
-versions.rxjava2 = "2.2.20"
-versions.rxandroid = "2.1.1"
 versions.kotlin = "1.6.10"
-versions.room = "2.4.1"
 versions.x_lifecycle = "2.4.0"
 versions.x_appcompat = "1.4.1"
 ext.lib_versions = versions
 
 def buildVersions = [:]
-buildVersions.minSdk = 23
+buildVersions.minSdk = 16
 buildVersions.targetSdk = 30
 buildVersions.compileSdk = 30
 buildVersions.buildTools = "30.0.2"
