@@ -1,7 +1,7 @@
 ![header-image](header.png)
 
-This project aims to provide no-nonsense logging API that is easily extensible. 
-The goal of this library is not to be rich in features, but to provide a baseline for you to build on in your own projects.
+Sensible logging for Android aim to provide no-nonsense logging API that is easily extensible. 
+The goal of this library is *not* to be rich in features, but to provide a baseline for you to build on in your own projects.
 
 The members of the android guild at M had different needs for logging. Some enjoy a nice and clean LogCat log while others like more verbose logging.
 With android-log we satisfied both needs.
