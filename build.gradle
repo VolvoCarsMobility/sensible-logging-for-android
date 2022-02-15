@@ -9,9 +9,9 @@ plugins {
 }
 
 ext {
-    kotlinJvmVersion = '1.8'
-    sourceCompatibilityVersion = JavaVersion.VERSION_1_8
-    targetCompatibilityVersion = JavaVersion.VERSION_1_8
+    kotlinJvmVersion = '11'
+    sourceCompatibilityVersion = JavaVersion.VERSION_11
+    targetCompatibilityVersion = JavaVersion.VERSION_11
 }
 
 

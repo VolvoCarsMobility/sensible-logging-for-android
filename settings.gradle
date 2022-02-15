@@ -14,5 +14,3 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Log"
 include ':log'
-include ':log-persistence'
-
