@@ -1,10 +1,10 @@
-![android-log](header.png)
+![header-image](header.png)
 
-# Logging for Android
+# Sensible logging for Android (*working name*)
 This project aims to provide no-nonsense logging API that is easily extensible. 
-The goal of this project to not to be feature rich, but to provide a baseline for you to build on in your project.
+The goal of this library is not to be rich in features, but to provide a baseline for you to build on in your own projects.
 
-The members of the android function at M had different needs for logging. Some enjoy a nice and clean log while others like more verbose logging.
+The members of the android guild at M had different needs for logging. Some enjoy a nice and clean LogCat log while others like more verbose logging.
 With android-log we satisfied both needs.
 
 ## Project structure
@@ -24,6 +24,8 @@ To control what a `Printer` should output you pass an instance of `Filter`. You 
 If you don't care about filters, you can pass the `AllowAllFilter` to your `Printer`.
 
 ### Formatters
+![formatter-screenshot](screenshot.png)
+
 A `Printer` uses a `Formatter` to control the format of the output. The formatter in the screenshot above is called `LogCatFormatterExtended`. 
 If you are directing your output to a file, we recommend using `SimpleFormatter`
 
@@ -54,7 +56,7 @@ object Categories {
 
 ### Step 1
 ```kotlin
-        if (BuildConfig.DEBUG) {
+    if (BuildConfig.DEBUG) {
     // Sane defaults filter
     val logFilter = SimpleLogLevelFilter(Level.ERROR) or SimpleCategoryFilter(
         listOf(
@@ -80,8 +82,21 @@ object Categories {
 ### Step 2
 ```kotlin
  // Log from your code
- Log.d("Initialising the flux capacitor", Categories.Flux)
+ // Passing "Default" as category is optional, if no category is passed default will be used 
+ Log.d("Initialising the flux capacitor", Categories.Default)
 ```
+
+### Step 3
+Build your own Printers to solve your project needs
+
+For example: you can log non-fatal exceptions to your crash reporting service via a `CrashReportingPrinter`.
+The `CrashReportingPrinter` can be configured with a `Filter` that only pass the category `"CrashReportingService"`.
+Using that you can easily log to this channel from wherever in your code.
+
+Want persisted logs? Implement a `SqlitePrinter` using your favourite ORM library. You can then display those statements from
+your debug UI. Or provide a shortcut from your app settings to dump the database to a text file that your users can email to you.
+
+Want to control the log categories in runtime? Use the `SharedPreferencesCategoryFilter` with your `LogCatPrinter` and enable updating of it from your debug UI.
 
 ## Download
 

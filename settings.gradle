@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "Log"
+rootProject.name = "Sensible logging for Android"
 include ':log'
