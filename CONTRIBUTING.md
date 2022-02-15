@@ -9,3 +9,12 @@ All submissions, including submissions by project members, require review. We
 use GitHub pull requests for this purpose. Consult
 [GitHub Help](https://help.github.com/articles/about-pull-requests/) for more
 information on using pull requests.
+
+### Commit, Push \& Review
+The entire process of constructing or fixing a feature or bug
+
+1. Make sure there is a Github issue for the task at hand.
+2. Branch from the latest `main` issue number for your task, e.g: `feature/#123_add_support_for_flux_capacitors` or `bugfix/#123_fix_flux_capacitor` etc.
+3. Work on your branch and prepend commit messages with your issue number: `#123: enable the flux capacitor`
+4. When you are ready, do a pull request and follow the PR template. Make sure you utilise the [closing keywords](https://help.github.com/articles/closing-issues-using-keywords/) for the issue to be closed when merged.
+5. When the number of required reviewers for PR approval coupled with CI integration success is passed, __you__ have the responsibility to merge it, do it!
