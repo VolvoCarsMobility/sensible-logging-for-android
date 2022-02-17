@@ -109,6 +109,10 @@ dependencies {
 }
 ```
 
+## Requirements
+
+ - `minSdk` is currently set to `16`
+ - This library is currently dependant on `androidx.appcompat` and `androidx.lifecycle` libraries
 
 ## License
 
