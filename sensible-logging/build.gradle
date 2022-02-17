@@ -23,11 +23,6 @@ android {
         }
     }
 
-    compileOptions {
-        sourceCompatibility sourceCompatibilityVersion
-        targetCompatibility targetCompatibilityVersion
-    }
-
     testOptions {
         unitTests.returnDefaultValues = true
     }
