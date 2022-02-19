@@ -1,13 +1,14 @@
 ![header-image](header.png)
 
 Sensible logging for Android aim to provide no-nonsense logging API that is easily extensible. 
-The goal of this library is *not* to be rich in features, but to provide a baseline for you to build on in your own projects.
+The goal of this library is *not* to be rich in features, but to provide a stable baseline for you to build on in your own projects.
 
-The members of the android guild at M had different needs for logging. Some enjoy a nice and clean LogCat log while others like more verbose logging.
-With android-log we satisfied both needs.
+> *"The members of the android guild at M had different needs for logging. Some enjoy a nice and clean LogCat log while others like a more verbose approach to logging.*
+>
+>*With **Sensible logging for Android** we satisfied both of those needs."*
 
-## Project structure
-Logging for Android consists of a few fundamental elements:
+## Core concepts
+The library consists of a few fundamental elements:
 
 ### Log class
 The `Log` class is the main interaction point of this library. 
