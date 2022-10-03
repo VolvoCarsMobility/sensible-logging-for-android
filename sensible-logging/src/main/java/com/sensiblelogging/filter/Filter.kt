@@ -16,8 +16,15 @@
 
 package com.sensiblelogging.filter
 
+import com.sensiblelogging.Level
 import com.sensiblelogging.Line
 
 interface Filter {
     fun matches(line: Line): Boolean
+
+    companion object {
+        fun level(level: Level): Filter = SimpleLogLevelFilter(level)
+        fun categories(categories: List<String>): Filter = SimpleCategoryFilter(categories)
+        fun allowAll(): Filter = AllowAllFilter
+    }
 }

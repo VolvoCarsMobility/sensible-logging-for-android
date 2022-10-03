@@ -18,7 +18,7 @@ package com.sensiblelogging
 
 data class Line(
     val timestamp: Long,
-    val categories: List<String>,
+    val category: String,
     val level: Level,
     val message: String,
     val preFormatted: Boolean,
