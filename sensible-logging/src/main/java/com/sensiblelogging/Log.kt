@@ -15,10 +15,19 @@
  */
 package com.sensiblelogging
 
+import com.sensiblelogging.filter.AllowAllFilter
+import com.sensiblelogging.filter.Filter
+import com.sensiblelogging.formatter.Formatter
+import com.sensiblelogging.formatter.LogCatFormatterSimple
+import com.sensiblelogging.formatter.SimpleFormatter
+import com.sensiblelogging.printer.LogCatPrinter
 import com.sensiblelogging.printer.Printer
+import com.sensiblelogging.printer.PrinterWrapper
+import com.sensiblelogging.printer.StandardOutPrinter
 import com.sensiblelogging.processor.LogProcessor
-import com.sensiblelogging.util.Constants.DEFAULT_CATEGORIES
-import com.sensiblelogging.util.Constants.DEFAULT_CATEGORY_VARARG
+import com.sensiblelogging.util.Constants.DEFAULT_CATEGORY
+import com.sensiblelogging.util.Constants.DEFAULT_CHANNEL
+import com.sensiblelogging.util.Constants.DEFAULT_CHANNELS
 import com.sensiblelogging.util.Constants.DEFAULT_STACK_DEPTH
 import com.sensiblelogging.util.Constants.EMPTY_PARAMS
 
@@ -28,99 +37,136 @@ object Log {
     fun v(
         message: String,
         parameters: Map<String, String> = EMPTY_PARAMS,
-        vararg categories: String = DEFAULT_CATEGORY_VARARG
-    ) = processor.log(Level.VERBOSE, message, false, categories.toList(), null, parameters, DEFAULT_STACK_DEPTH)
+        category: String = DEFAULT_CATEGORY,
+        vararg channels: String = DEFAULT_CHANNEL
+    ) = processor.log(Level.VERBOSE, message, false, category, channels.toList(), null, parameters, DEFAULT_STACK_DEPTH)
 
     fun v(
         message: String,
-        vararg categories: String = DEFAULT_CATEGORY_VARARG
-    ) = processor.log(Level.VERBOSE, message, false, categories.toList(), null, EMPTY_PARAMS, DEFAULT_STACK_DEPTH)
+        category: String = DEFAULT_CATEGORY,
+        vararg channels: String = DEFAULT_CHANNEL
+    ) = processor.log(Level.VERBOSE, message, false, category, channels.toList(), null, EMPTY_PARAMS, DEFAULT_STACK_DEPTH)
 
     fun d(
         message: String,
         parameters: Map<String, String> = EMPTY_PARAMS,
-        vararg categories: String = DEFAULT_CATEGORY_VARARG
-    ) = processor.log(Level.DEBUG, message, false, categories.toList(), null, parameters, DEFAULT_STACK_DEPTH)
+        category: String = DEFAULT_CATEGORY,
+        vararg channels: String = DEFAULT_CHANNEL
+    ) = processor.log(Level.DEBUG, message, false, category, channels.toList(), null, parameters, DEFAULT_STACK_DEPTH)
 
     fun d(
         message: String,
-        vararg categories: String = DEFAULT_CATEGORY_VARARG
-    ) = processor.log(Level.DEBUG, message, false, categories.toList(), null, EMPTY_PARAMS, DEFAULT_STACK_DEPTH)
+        category: String = DEFAULT_CATEGORY,
+        vararg channels: String = DEFAULT_CHANNEL
+    ) = processor.log(Level.DEBUG, message, false, category, channels.toList(), null, EMPTY_PARAMS, DEFAULT_STACK_DEPTH)
 
     fun i(
         message: String,
         parameters: Map<String, String> = EMPTY_PARAMS,
-        vararg categories: String = DEFAULT_CATEGORY_VARARG
-    ) = processor.log(Level.INFO, message, false, categories.toList(), null, parameters, DEFAULT_STACK_DEPTH)
+        category: String = DEFAULT_CATEGORY,
+        vararg channels: String = DEFAULT_CHANNEL
+    ) = processor.log(Level.INFO, message, false, category, channels.toList(), null, parameters, DEFAULT_STACK_DEPTH)
 
     fun i(
         message: String,
-        vararg categories: String = DEFAULT_CATEGORY_VARARG
-    ) = processor.log(Level.INFO, message, false, categories.toList(), null, EMPTY_PARAMS, DEFAULT_STACK_DEPTH)
+        category: String = DEFAULT_CATEGORY,
+        vararg channels: String = DEFAULT_CHANNEL
+    ) = processor.log(Level.INFO, message, false, category, channels.toList(), null, EMPTY_PARAMS, DEFAULT_STACK_DEPTH)
 
     fun w(
         message: String,
         throwable: Throwable? = null,
         parameters: Map<String, String> = EMPTY_PARAMS,
-        vararg categories: String = DEFAULT_CATEGORY_VARARG
-    ) = processor.log(Level.WARN, message, false, categories.toList(), throwable, parameters, DEFAULT_STACK_DEPTH)
+        category: String = DEFAULT_CATEGORY,
+        vararg channels: String = DEFAULT_CHANNEL
+    ) = processor.log(Level.WARN, message, false, category, channels.toList(), throwable, parameters, DEFAULT_STACK_DEPTH)
 
     fun w(
         message: String,
         parameters: Map<String, String> = EMPTY_PARAMS,
-        vararg categories: String = DEFAULT_CATEGORY_VARARG
-    ) = processor.log(Level.WARN, message, false, categories.toList(), null, parameters, DEFAULT_STACK_DEPTH)
+        category: String = DEFAULT_CATEGORY,
+        vararg channels: String = DEFAULT_CHANNEL
+    ) = processor.log(Level.WARN, message, false, category, channels.toList(), null, parameters, DEFAULT_STACK_DEPTH)
 
     fun w(
         message: String,
         throwable: Throwable? = null,
-        vararg categories: String = DEFAULT_CATEGORY_VARARG
-    ) = processor.log(Level.WARN, message, false, categories.toList(), throwable, EMPTY_PARAMS, DEFAULT_STACK_DEPTH)
+        category: String = DEFAULT_CATEGORY,
+        vararg channels: String = DEFAULT_CHANNEL
+    ) = processor.log(Level.WARN, message, false, category, channels.toList(), throwable, EMPTY_PARAMS, DEFAULT_STACK_DEPTH)
 
     fun w(
         message: String,
-        vararg categories: String = DEFAULT_CATEGORY_VARARG
-    ) = processor.log(Level.WARN, message, false, categories.toList(), null, EMPTY_PARAMS, DEFAULT_STACK_DEPTH)
+        category: String = DEFAULT_CATEGORY,
+        vararg channels: String = DEFAULT_CHANNEL
+    ) = processor.log(Level.WARN, message, false, category, channels.toList(), null, EMPTY_PARAMS, DEFAULT_STACK_DEPTH)
 
     fun e(
         message: String,
         parameters: Map<String, String> = EMPTY_PARAMS,
-        vararg categories: String = DEFAULT_CATEGORY_VARARG
-    ) = processor.log(Level.ERROR, message, false, categories.toList(), null, parameters, DEFAULT_STACK_DEPTH)
+        category: String = DEFAULT_CATEGORY,
+        vararg channels: String = DEFAULT_CHANNEL
+    ) = processor.log(Level.ERROR, message, false, category, channels.toList(), null, parameters, DEFAULT_STACK_DEPTH)
 
     fun e(
         message: String,
         throwable: Throwable? = null,
-        vararg categories: String = DEFAULT_CATEGORY_VARARG
-    ) = processor.log(Level.ERROR, message, false, categories.toList(), throwable, EMPTY_PARAMS, DEFAULT_STACK_DEPTH)
+        category: String = DEFAULT_CATEGORY,
+        vararg channels: String = DEFAULT_CHANNEL
+    ) = processor.log(Level.ERROR, message, false, category, channels.toList(), throwable, EMPTY_PARAMS, DEFAULT_STACK_DEPTH)
 
     fun e(
         message: String,
         throwable: Throwable? = null,
         parameters: Map<String, String> = EMPTY_PARAMS,
-        vararg categories: String = DEFAULT_CATEGORY_VARARG
-    ) = processor.log(Level.ERROR, message, false, categories.toList(), throwable, parameters, DEFAULT_STACK_DEPTH)
+        category: String = DEFAULT_CATEGORY,
+        vararg channels: String = DEFAULT_CHANNEL
+    ) = processor.log(Level.ERROR, message, false, category, channels.toList(), throwable, parameters, DEFAULT_STACK_DEPTH)
 
     fun e(
         message: String,
-        vararg categories: String = DEFAULT_CATEGORY_VARARG
-    ) = processor.log(Level.ERROR, message, false, categories.toList(), null, EMPTY_PARAMS, DEFAULT_STACK_DEPTH)
+        category: String = DEFAULT_CATEGORY,
+        vararg channels: String = DEFAULT_CHANNEL
+    ) = processor.log(Level.ERROR, message, false, category, channels.toList(), null, EMPTY_PARAMS, DEFAULT_STACK_DEPTH)
 
     fun log(
         level: Level = Level.DEBUG,
         message: String,
         preFormattedMessage: Boolean,
-        categories: List<String> = DEFAULT_CATEGORIES,
+        category: String = DEFAULT_CATEGORY,
+        channels: List<String> = DEFAULT_CHANNELS,
         throwable: Throwable? = null,
         parameters: Map<String, String> = EMPTY_PARAMS,
         stackDepth: Int = DEFAULT_STACK_DEPTH
-    ) = processor.log(level, message, preFormattedMessage, categories, throwable, parameters, stackDepth)
+    ) = processor.log(level, message, preFormattedMessage, category, channels, throwable, parameters, stackDepth)
 
-    fun removePrinters(vararg printer: Printer) {
-        processor.removePrinters(*printer)
-    }
+    object Setup {
+        class Builder {
+            private val printers = mutableListOf<PrinterWrapper>()
 
-    fun addPrinters(vararg printer: Printer) {
-        processor.addPrinters(*printer)
+            fun addLogCatChannel(filter: Filter = AllowAllFilter, formatter: Formatter = LogCatFormatterSimple): Builder {
+                printers += PrinterWrapper(LogCatPrinter(formatter, filter), "LogCat", true)
+                return this
+            }
+
+            fun addStandardOutChannel(filter: Filter = AllowAllFilter, formatter: Formatter = SimpleFormatter): Builder {
+                printers += PrinterWrapper(StandardOutPrinter(formatter, filter), "StandardOut", false)
+                return this
+            }
+
+            fun addChannel(channel: String, printer: Printer): Builder {
+                printers += PrinterWrapper(printer, channel, false)
+                return this
+            }
+
+            fun addDefaultChannel(channel: String, printer: Printer): Builder {
+                printers += PrinterWrapper(printer, channel, true)
+                return this
+            }
+
+            fun build() {
+                processor.addPrinters(printers)
+            }
+        }
     }
 }
