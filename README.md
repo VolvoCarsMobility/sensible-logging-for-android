@@ -1,9 +1,9 @@
 ![header-image](header.png)
 
-Sensible logging for Android aim to provide no-nonsense logging API that is easily extensible. 
+Sensible logging for Android aim to provide no-nonsense logging API that is easily extended. 
 The goal of this library is *not* to be rich in features, but to provide a stable baseline for you to build on in your own projects.
 
-> *"The members of the android guild at M had different needs for logging. Some enjoy a nice and clean LogCat log while others like a more verbose approach to logging.*
+> *"The members of the android guild at Volvo Car Mobility had different needs for logging. Some enjoy a nice and clean LogCat log while others like a more verbose approach to logging.*
 >
 >*With **Sensible logging for Android** we satisfied both of those needs."*
 
@@ -12,28 +12,49 @@ The library consists of a few fundamental elements:
 
 ### Log class
 The `Log` class is the main interaction point of this library. 
-Inside it you will find those familiar log statement methods such as `Log.d()`
+Inside it you will find the familiar log statement methods such as `Log.d()`
 
-### Printers
-`Log` directs the log messages to `Printer` implementations. Think of Printers as channels you print your statements to.
-Currently, the library includes `LogCatPrinter`, `NotificationPrinter` and `StandardOutPrinter` (for unit tests).
+### Channels
+`Log` directs the log statements to `Channel` implementations. Think of Channels as sinks you print your statements to.
+Currently, the library includes `LogCatChannel`, `NotificationChannel` and `StandardOutChannel` (for unit tests).
+
+#### Channel ids
+A channel has a string identifier. You can optionally specify a channel ID in your log statement to also print to that channel.
+While the channel parameter is a string. We recommend organising your channels in one file. Like so:
+
+```kotlin
+typealias Channel = String
+
+object Channels {
+    const val LogCat: Channel = LogCatChannel.id
+    const val CrashReporting: Channel = CrashReportingChannel.id
+    const val Notification: Channel = NotificationChannel.id
+}
+```
+
+As an example, you can log non-fatal exceptions and messages to your crash reporting service via a `CrashReportingChannel`.
+Using that you can easily log to your crash reporting service from wherever in your code.
+
+```kotlin
+    Log.e("Something fatal occurred", exception, Channels.CrashReporting)
+```
 
 ### Filters
-To control what a `Printer` should output you pass an instance of `Filter`. You can combine different filters by using the infix functions
+To control what a `Channel` should output you pass an instance of `Filter`. You can combine different filters by using the infix functions
 `and` & `or`: for instance, `SimpleLogLevelFilter(Level.ERROR) and SimpleCategoryFilter(Categories.UI)` would only print messages with level *error* and above, and of the category *UI*.
-If you don't care about filters, you can pass the `AllowAllFilter` to your `Printer`.
+If you don't care about filters, you can pass the `AllowAllFilter` to your `Channel`.
 
 ### Formatters
 ![formatter-screenshot](screenshot.png)
 
-A `Printer` uses a `Formatter` to control the format of the output. The formatter in the screenshot above is called `LogCatFormatterExtended`. 
+A `Channel` uses a `Formatter` to control the format of the output. The formatter in the screenshot above is called `LogCatFormatterExtended`. 
 If you are directing your output to a file, we recommend using `SimpleFormatter`
 
 ### Categories
 All log statement methods inside `Log` allow the passing of a log category. This can be used to order your statements into high level areas of interest.
 Want to know what is going on with your backend? Direct your network client log statements to the `Network` category, and enable only that category.
 
-While the category parameter is a string. We recommend organising your categories in one file. Like so:
+Similar to channels, the category parameter is a string. Here we also recommend organising your categories in one file. Like so:
 
 ```kotlin
 typealias Category = String
@@ -55,8 +76,9 @@ object Categories {
 ## Usage
 
 ### Step 1
+
 ```kotlin
-    if (BuildConfig.DEBUG) {
+if (BuildConfig.DEBUG) {
     // Sane defaults filter
     val logFilter = SimpleLogLevelFilter(Level.ERROR) or SimpleCategoryFilter(
         listOf(
@@ -68,7 +90,7 @@ object Categories {
     )
 
     // attach your printers to the Log framework
-    Log.printers(LogCatPrinter(LogCatFormatterExtended, logFilter))
+    Log.printers(LogCatChannel(LogCatFormatterExtended, logFilter))
 
     // optionally opt-in to logging out Process, Activity and Fragment lifecycle methods
     registerLifecycleLoggers(
@@ -87,16 +109,16 @@ object Categories {
 ```
 
 ### Step 3
-Build your own Printers to solve your project needs
+Build your own Channels to solve your project needs
 
-For example: you can log non-fatal exceptions to your crash reporting service via a `CrashReportingPrinter`.
-The `CrashReportingPrinter` can be configured with a `Filter` that only pass the category `"CrashReportingService"`.
+For example: you can log non-fatal exceptions to your crash reporting service via a `CrashReportingChannel`.
+The `CrashReportingChannel` can be configured with a `Filter` that only pass the category `"CrashReportingService"`.
 Using that you can easily log to this channel from wherever in your code.
 
-Want persisted logs? Implement a `SqlitePrinter` using your favourite ORM library. You can then display those statements from
+Want persisted logs? Implement a `SQLiteChannel` using your favourite ORM library. You can then display those statements from
 your debug UI. Or provide a shortcut from your app settings to dump the database to a text file that your users can email to you.
 
-Want to control the log categories in runtime? Use the `SharedPreferencesCategoryFilter` with your `LogCatPrinter` and enable updating of it from your debug UI.
+Want to control the log categories in runtime? Use the `SharedPreferencesCategoryFilter` with your `LogCatChannel` and enable updating of it from your debug UI.
 
 ## Download
 
