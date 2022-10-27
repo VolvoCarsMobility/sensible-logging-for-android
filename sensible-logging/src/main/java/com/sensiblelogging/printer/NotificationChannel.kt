@@ -30,13 +30,15 @@ import com.sensiblelogging.Meta
 import com.sensiblelogging.filter.CategoryFilter
 
 @RequiresApi(Build.VERSION_CODES.N)
-class NotificationPrinter constructor(
+class NotificationChannel constructor(
     private val context: Context,
     override val filter: CategoryFilter,
+    override val default: Boolean = false,
     @DrawableRes private val smallIconRes: Int
-) : Printer() {
+) : Channel() {
 
     companion object {
+        const val id = "NotificationChannel"
         private const val channelId = "channel_id_log_output"
         fun createNotificationChannel(
             context: Context,
@@ -59,12 +61,13 @@ class NotificationPrinter constructor(
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     }
 
+    override val id: String = Companion.id
+
     private val notificationManager = context.notificationManager()
 
     override fun printFiltered(line: Line, meta: Meta) {
-        val category = extractCategory(line)
-        val id = category.asNotificationId()
-        val style = getOrCreateStyle(category, id)
+        val id = line.category.asNotificationId()
+        val style = getOrCreateStyle(line.category, id)
         val notification: Notification = createNotification(line, meta, style)
         notificationManager.notify(id, notification)
     }
@@ -90,9 +93,6 @@ class NotificationPrinter constructor(
     }
 
     private fun String.asNotificationId() = hashCode()
-
-    private fun extractCategory(line: Line) =
-        line.categories.intersect(filter.categories).first()
 
     private fun findActiveNotification(notificationId: Int): Notification? {
         return notificationManager

@@ -22,10 +22,18 @@ import com.sensiblelogging.Meta
 import com.sensiblelogging.filter.Filter
 import com.sensiblelogging.formatter.Formatter
 
-class StandardOutPrinter(
+class StandardOutChannel(
     private val formatter: Formatter,
-    override val filter: Filter
-) : Printer() {
+    override val filter: Filter,
+    override val default: Boolean = false,
+) : Channel() {
+
+    companion object {
+        const val id = "StandardOut"
+    }
+
+    override val id: String = Companion.id
+
     override fun printFiltered(line: Line, meta: Meta) {
         val formattedMessage = if (line.preFormatted) line.message else formatter.format(line, meta)
         if (line.level.ordinal < Level.ERROR.ordinal) {

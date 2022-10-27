@@ -16,25 +16,26 @@
 
 package com.sensiblelogging.printer
 
-import android.util.Log.d
-import android.util.Log.e
-import android.util.Log.i
-import android.util.Log.v
-import android.util.Log.w
+import android.util.Log.*
 import com.sensiblelogging.Level
 import com.sensiblelogging.Line
 import com.sensiblelogging.Meta
 import com.sensiblelogging.filter.Filter
 import com.sensiblelogging.formatter.Formatter
+import com.sensiblelogging.util.Constants
 
-class LogCatPrinter(
+class LogCatChannel(
     private val formatter: Formatter,
-    override val filter: Filter
-) : Printer() {
+    override val filter: Filter,
+    override val default: Boolean = true,
+) : Channel() {
 
     companion object {
+        const val id = "LogCat"
         const val TAG = "Log"
     }
+
+    override val id: String = Companion.id
 
     override fun printFiltered(line: Line, meta: Meta) {
         val formattedMessage = if (line.preFormatted) line.message else formatter.format(line, meta)
