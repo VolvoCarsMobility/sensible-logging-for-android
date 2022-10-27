@@ -20,8 +20,14 @@ Currently, the library includes `LogCatChannel`, `NotificationChannel` and `Stan
 
 #### Channel ids
 A channel has a string identifier. You can optionally specify a channel ID in your log statement to also print to that channel.
-While the channel parameter is a string. We recommend organising your channels in one file. Like so:
 
+As an example, you can log non-fatal exceptions and messages to your crash reporting service via a `CrashReportingChannel`.
+Using that you can easily log to your crash reporting service from wherever in your code.
+```kotlin
+    Log.e("Something fatal occurred", exception, Channels.CrashReporting)
+```
+
+While the channel parameter is a string. We recommend organising your channels in one file. Like so:
 ```kotlin
 typealias Channel = String
 
@@ -30,13 +36,6 @@ object Channels {
     const val CrashReporting: Channel = CrashReportingChannel.id
     const val Notification: Channel = NotificationChannel.id
 }
-```
-
-As an example, you can log non-fatal exceptions and messages to your crash reporting service via a `CrashReportingChannel`.
-Using that you can easily log to your crash reporting service from wherever in your code.
-
-```kotlin
-    Log.e("Something fatal occurred", exception, Channels.CrashReporting)
 ```
 
 ### Filters
