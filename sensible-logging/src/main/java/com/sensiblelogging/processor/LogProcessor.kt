@@ -18,27 +18,27 @@ package com.sensiblelogging.processor
 
 import com.sensiblelogging.Level
 import com.sensiblelogging.Line
-import com.sensiblelogging.printer.PrinterWrapper
+import com.sensiblelogging.printer.Channel
 import com.sensiblelogging.util.LogUtil
 
 internal class LogProcessor {
 
-    private var printers = ArrayList<PrinterWrapper>()
+    private var channels = ArrayList<Channel>()
 
     @Volatile
-    private var printingList = emptyArray<PrinterWrapper>()
+    private var channelsArray = emptyArray<Channel>()
 
-    fun addPrinters(printer: List<PrinterWrapper>) {
-        synchronized(printers) {
-            printers.addAll(printer)
-            printingList = printers.toTypedArray()
+    fun addChannels(channels: List<Channel>) {
+        synchronized(this.channels) {
+            this.channels.addAll(channels)
+            channelsArray = this.channels.toTypedArray()
         }
     }
 
-    fun removePrinters(printer: List<PrinterWrapper>) {
-        synchronized(printers) {
-            printers.removeAll(printer)
-            printingList = printers.toTypedArray()
+    fun removeChannels(channels: List<Channel>) {
+        synchronized(this.channels) {
+            this.channels.removeAll(channels)
+            channelsArray = this.channels.toTypedArray()
         }
     }
 
@@ -61,11 +61,11 @@ internal class LogProcessor {
             throwable,
             parameters
         )
-        if (printingList.any { it.printer.filter.matches(line) }) {
+        if (channelsArray.any { it.filter.matches(line) }) {
             val meta = LogUtil.gatherMeta(stackDepth)
-            printingList
-                .filter { it.default || channels.contains(it.channel) }
-                .forEach { it.printer.print(line, meta) }
+            channelsArray
+                .filter { it.default || channels.contains(it.id) }
+                .forEach { it.print(line, meta) }
         }
     }
 }

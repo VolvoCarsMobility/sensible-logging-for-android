@@ -20,8 +20,10 @@ import com.sensiblelogging.Line
 import com.sensiblelogging.Meta
 import com.sensiblelogging.filter.Filter
 
-abstract class Printer {
+abstract class Channel {
     abstract val filter: Filter
+    abstract val id: String
+    abstract val default: Boolean
     fun print(line: Line, meta: Meta) {
         if (filter.matches(line)) {
             printFiltered(line, meta)
