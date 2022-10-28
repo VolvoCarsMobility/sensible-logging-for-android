@@ -34,7 +34,7 @@ class StandardOutChannel(
 
     override val id: String = Companion.id
 
-    override fun printFiltered(line: Line, meta: Meta) {
+    override fun print(line: Line, meta: Meta) {
         val formattedMessage = if (line.preFormatted) line.message else formatter.format(line, meta)
         if (line.level.ordinal < Level.ERROR.ordinal) {
             System.out.println(formattedMessage)

@@ -18,7 +18,8 @@ Inside it you will find the familiar log statement methods such as `Log.d()`
 ```kotlin
 abstract class Channel {
     //...
-    abstract fun printFiltered(line: Line, meta: Meta)
+    abstract val id: String
+    abstract fun print(line: Line, meta: Meta)
 }
 ```
 `Log` directs the log statements to `Channel` implementations. Think of Channels as sinks you print your statements to.
@@ -110,8 +111,8 @@ if (BuildConfig.DEBUG) {
     )
 
     // attach your printers to the Log framework
-    Log.printers(
-        LogCatChannel(Formatter.logCatExtended(), logFilter)
+    Log.addChannels(
+        LogCatChannel(Formatter.logCatExtended(), logFilter, default = true)
     )
 
     // optionally opt-in to logging out Process, Activity and Fragment lifecycle methods

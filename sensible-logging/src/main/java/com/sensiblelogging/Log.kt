@@ -132,11 +132,11 @@ object Log {
         stackDepth: Int = DEFAULT_STACK_DEPTH
     ) = processor.log(level, message, preFormattedMessage, category, channels, throwable, parameters, stackDepth)
 
-    fun removePrinters(vararg channels: Channel) {
-        processor.removeChannels(channels.toList())
+    fun addChannels(vararg channels: Channel) {
+        processor.addChannels(channels.toList())
     }
 
-    fun addPrinters(vararg channels: Channel) {
-        processor.addChannels(channels.toList())
+    fun removeChannels(vararg channels: Channel) {
+        processor.removeChannels(channels.toList())
     }
 }

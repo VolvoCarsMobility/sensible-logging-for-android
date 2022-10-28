@@ -24,11 +24,11 @@ abstract class Channel {
     abstract val filter: Filter
     abstract val id: String
     abstract val default: Boolean
-    fun print(line: Line, meta: Meta) {
+    fun printFiltered(line: Line, meta: Meta) {
         if (filter.matches(line)) {
-            printFiltered(line, meta)
+            print(line, meta)
         }
     }
 
-    abstract fun printFiltered(line: Line, meta: Meta)
+    abstract fun print(line: Line, meta: Meta)
 }
