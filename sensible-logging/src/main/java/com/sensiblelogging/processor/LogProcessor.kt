@@ -65,7 +65,7 @@ internal class LogProcessor {
             val meta = LogUtil.gatherMeta(stackDepth)
             channelsArray
                 .filter { it.default || channels.contains(it.id) }
-                .forEach { it.print(line, meta) }
+                .forEach { it.printFiltered(line, meta) }
         }
     }
 }

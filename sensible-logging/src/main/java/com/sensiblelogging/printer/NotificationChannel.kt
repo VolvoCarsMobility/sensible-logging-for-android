@@ -65,7 +65,7 @@ class NotificationChannel constructor(
 
     private val notificationManager = context.notificationManager()
 
-    override fun printFiltered(line: Line, meta: Meta) {
+    override fun print(line: Line, meta: Meta) {
         val id = line.category.asNotificationId()
         val style = getOrCreateStyle(line.category, id)
         val notification: Notification = createNotification(line, meta, style)

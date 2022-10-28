@@ -37,7 +37,7 @@ class LogCatChannel(
 
     override val id: String = Companion.id
 
-    override fun printFiltered(line: Line, meta: Meta) {
+    override fun print(line: Line, meta: Meta) {
         val formattedMessage = if (line.preFormatted) line.message else formatter.format(line, meta)
         val error: Throwable? = line.throwable
         when (line.level) {

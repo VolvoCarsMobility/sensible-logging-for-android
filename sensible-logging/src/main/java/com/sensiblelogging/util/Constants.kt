@@ -16,13 +16,9 @@
 
 package com.sensiblelogging.util
 
-import com.sensiblelogging.printer.LogCatChannel
-
 object Constants {
     const val DEFAULT_CATEGORY = "Default"
-    internal val DEFAULT_CATEGORY_VARARG = arrayOf(DEFAULT_CATEGORY)
-    internal val DEFAULT_CATEGORIES: List<String> = listOf(DEFAULT_CATEGORY)
-    internal val DEFAULT_CHANNELS = arrayOf(LogCatChannel.id)
+    internal val DEFAULT_CHANNELS = emptyArray<String>()
     internal val DEFAULT_CHANNEL_LIST = DEFAULT_CHANNELS.asList()
     internal val EMPTY_PARAMS: Map<String, String> = emptyMap()
     internal const val DEFAULT_STACK_DEPTH = 4
