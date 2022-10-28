@@ -21,4 +21,10 @@ import com.sensiblelogging.Meta
 
 interface Formatter {
     fun format(line: Line, meta: Meta): String
+
+    companion object {
+        fun logCatSimple(): Formatter = LogCatFormatterSimple
+        fun logCatExtended(): Formatter = LogCatFormatterExtended
+        fun simple(): Formatter = SimpleFormatter
+    }
 }

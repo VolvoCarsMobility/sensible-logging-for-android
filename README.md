@@ -15,6 +15,12 @@ The `Log` class is the main interaction point of this library.
 Inside it you will find the familiar log statement methods such as `Log.d()`
 
 ### Channels
+```kotlin
+abstract class Channel {
+    //...
+    abstract fun printFiltered(line: Line, meta: Meta)
+}
+```
 `Log` directs the log statements to `Channel` implementations. Think of Channels as sinks you print your statements to.
 Currently, the library includes `LogCatChannel`, `NotificationChannel` and `StandardOutChannel` (for unit tests).
 
@@ -24,7 +30,7 @@ A channel has a string identifier. You can optionally specify a channel ID in yo
 As an example, you can log non-fatal exceptions and messages to your crash reporting service via a `CrashReportingChannel`.
 Using that you can easily log to your crash reporting service from wherever in your code.
 ```kotlin
-    Log.e("Something fatal occurred", exception, Channels.CrashReporting)
+    Log.e("Something fatal occurred", exception, "CrashReporting")
 ```
 
 While the channel parameter is a string. We recommend organising your channels in one file. Like so:
@@ -36,16 +42,31 @@ object Channels {
     const val CrashReporting: Channel = CrashReportingChannel.id
     const val Notification: Channel = NotificationChannel.id
 }
+
+// then you can autocomplete your way to the channel
+Log.e("Something fatal occurred", exception, Channels.CrashReporting)
 ```
 
 ### Filters
+```kotlin
+interface Filter {
+    fun matches(line: Line): Boolean
+}
+```
 To control what a `Channel` should output you pass an instance of `Filter`. You can combine different filters by using the infix functions
-`and` & `or`: for instance, `SimpleLogLevelFilter(Level.ERROR) and SimpleCategoryFilter(Categories.UI)` would only print messages with level *error* and above, and of the category *UI*.
+`and` & `or`:
+```kotlin
+    SimpleLogLevelFilter(Level.ERROR) and SimpleCategoryFilter(Categories.UI)
+```
+would only print messages with level *error* and above, and of the category *UI*.
 If you don't care about filters, you can pass the `AllowAllFilter` to your `Channel`.
 
 ### Formatters
-![formatter-screenshot](screenshot.png)
-
+```kotlin
+interface Formatter {
+    fun format(line: Line, meta: Meta): String
+}
+```
 A `Channel` uses a `Formatter` to control the format of the output. The formatter in the screenshot above is called `LogCatFormatterExtended`. 
 If you are directing your output to a file, we recommend using `SimpleFormatter`
 
@@ -79,7 +100,7 @@ object Categories {
 ```kotlin
 if (BuildConfig.DEBUG) {
     // Sane defaults filter
-    val logFilter = SimpleLogLevelFilter(Level.ERROR) or SimpleCategoryFilter(
+    val logFilter = Filter.level(Level.ERROR) or Filter.categories(
         listOf(
             Categories.Default,
             Categories.Process,
@@ -89,7 +110,9 @@ if (BuildConfig.DEBUG) {
     )
 
     // attach your printers to the Log framework
-    Log.printers(LogCatChannel(LogCatFormatterExtended, logFilter))
+    Log.printers(
+        LogCatChannel(Formatter.logCatExtended(), logFilter)
+    )
 
     // optionally opt-in to logging out Process, Activity and Fragment lifecycle methods
     registerLifecycleLoggers(
