@@ -1,5 +1,4 @@
 ![header-image](header.png)
-
 Sensible logging for Android aim to provide no-nonsense logging API that is easily extended. 
 The goal of this library is *not* to be rich in features, but to provide a stable baseline for you to build on in your own projects.
 
@@ -18,7 +17,7 @@ Inside it you will find the familiar log statement methods such as `Log.d()`
 ```kotlin
 abstract class Channel {
     //...
-    abstract val id: String
+    abstract val id: Int
     abstract fun print(line: Line, meta: Meta)
 }
 ```
@@ -39,9 +38,9 @@ While the channel parameter is an integer. We recommend organising your channels
 typealias Channel = Int
 
 object Channels {
-    const val LogCat: Channel = LogCatChannel.id
-    const val CrashReporting: Channel = CrashReportingChannel.id
-    const val Notification: Channel = NotificationChannel.id
+    const val LogCat: Channel = LogCatChannel.ID
+    const val CrashReporting: Channel = CrashReportingChannel.ID
+    const val Notification: Channel = NotificationChannel.ID
 }
 
 // then you can autocomplete your way to the channel
