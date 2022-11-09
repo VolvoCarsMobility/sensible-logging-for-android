@@ -17,16 +17,19 @@
 package com.sensiblelogging.filter
 
 import android.content.SharedPreferences
+import com.sensiblelogging.Category
 import com.sensiblelogging.util.Constants.DEFAULT_CATEGORY
 
 class SharedPreferencesCategoryFilter(
     private val preferences: SharedPreferences,
     private val stringArrayPreferenceKey: String,
-    private val defaultCategories: Set<String> = setOf(DEFAULT_CATEGORY)
+    defaultCategories: Set<Category> = setOf(DEFAULT_CATEGORY)
 ) : CategoryFilter() {
 
-    private lateinit var _categories: List<String>
-    val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+    private lateinit var _categories: List<Category>
+    private val _defaultCategories: Set<String> = defaultCategories.map { it.name }.toSet()
+
+    private val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
         if (key == stringArrayPreferenceKey) {
             readValue()
         }
@@ -37,10 +40,13 @@ class SharedPreferencesCategoryFilter(
         preferences.registerOnSharedPreferenceChangeListener(listener)
     }
 
-    override val categories: List<String>
+    override val categories: List<Category>
         get() = _categories
 
     private fun readValue() {
-        _categories = preferences.getStringSet(stringArrayPreferenceKey, defaultCategories)?.toList().orEmpty()
+        _categories = preferences.getStringSet(stringArrayPreferenceKey, _defaultCategories)
+            ?.map { Category(it) }
+            ?.toList()
+            .orEmpty()
     }
 }

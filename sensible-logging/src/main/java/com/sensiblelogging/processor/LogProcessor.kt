@@ -16,6 +16,7 @@
 
 package com.sensiblelogging.processor
 
+import com.sensiblelogging.Category
 import com.sensiblelogging.Level
 import com.sensiblelogging.Line
 import com.sensiblelogging.printer.Channel
@@ -46,15 +47,15 @@ internal class LogProcessor {
         level: Level,
         message: String,
         preFormattedMessage: Boolean,
-        categories: String,
-        channels: List<String>,
+        category: Category,
+        channels: List<Int>,
         throwable: Throwable?,
         parameters: Map<String, String>,
         stackDepth: Int
     ) {
         val line = Line(
             System.currentTimeMillis(),
-            categories,
+            category,
             level,
             message,
             preFormattedMessage,

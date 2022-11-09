@@ -16,10 +16,11 @@
 
 package com.sensiblelogging.filter
 
+import com.sensiblelogging.Category
 import com.sensiblelogging.Line
 
-abstract class CategoryFilter : FieldFilter<String> {
-    abstract val categories: List<String>
-    override fun locateField(line: Line): String = line.category
-    override fun isAllowed(field: String): Boolean = categories.any { field.contains(it) }
+abstract class CategoryFilter : FieldFilter<Category> {
+    abstract val categories: List<Category>
+    override fun locateField(line: Line): Category = line.category
+    override fun isAllowed(field: Category): Boolean = categories.any { field == it }
 }

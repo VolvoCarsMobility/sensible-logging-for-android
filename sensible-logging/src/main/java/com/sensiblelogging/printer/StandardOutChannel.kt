@@ -29,10 +29,11 @@ class StandardOutChannel(
 ) : Channel() {
 
     companion object {
+        const val ID = 3
         const val id = "StandardOut"
     }
 
-    override val id: String = Companion.id
+    override val id = ID
 
     override fun print(line: Line, meta: Meta) {
         val formattedMessage = if (line.preFormatted) line.message else formatter.format(line, meta)

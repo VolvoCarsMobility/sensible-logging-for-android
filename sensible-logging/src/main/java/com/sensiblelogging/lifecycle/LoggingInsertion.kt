@@ -19,18 +19,27 @@ package com.sensiblelogging.lifecycle
 import android.app.Activity
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
+import com.sensiblelogging.Category
 
-internal class ActivityLifecycleLoggingInserter(private val category: String, private val separator: String) :
+internal class ActivityLifecycleLoggingInserter(
+    private val category: Category,
+    private val channel: Int,
+    private val separator: String
+) :
     ActivityOnCreateListener(doOnCreate = {
         it.lifecycle.addObserver(
-            ActivityLifecycleLogger(it, category, separator)
+            ActivityLifecycleLogger(it, category, channel, separator)
         )
     })
 
-internal class FragmentLifecycleLoggingInserter(private val category: String, private val separator: String) :
+internal class FragmentLifecycleLoggingInserter(
+    private val category: Category,
+    private val channel: Int,
+    private val separator: String
+) :
     ActivityOnCreateListener(doOnCreate = {
         it.supportFragmentManager.registerFragmentLifecycleCallbacks(
-            FragmentLifecycleLogger(category, separator),
+            FragmentLifecycleLogger(category, channel, separator),
             true
         )
     })
