@@ -16,6 +16,7 @@
 
 package com.sensiblelogging.filter
 
+import com.sensiblelogging.Category
 import com.sensiblelogging.Level
 import com.sensiblelogging.Line
 
@@ -24,7 +25,7 @@ interface Filter {
 
     companion object {
         fun level(level: Level): Filter = SimpleLogLevelFilter(level)
-        fun categories(categories: List<String>): Filter = SimpleCategoryFilter(categories)
+        fun categories(categories: List<Category>): Filter = SimpleCategoryFilter(categories)
         fun allowAll(): Filter = AllowAllFilter
     }
 }

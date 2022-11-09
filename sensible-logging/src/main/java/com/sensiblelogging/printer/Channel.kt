@@ -22,7 +22,7 @@ import com.sensiblelogging.filter.Filter
 
 abstract class Channel {
     abstract val filter: Filter
-    abstract val id: String
+    abstract val id: Int
     abstract val default: Boolean
     fun printFiltered(line: Line, meta: Meta) {
         if (filter.matches(line)) {

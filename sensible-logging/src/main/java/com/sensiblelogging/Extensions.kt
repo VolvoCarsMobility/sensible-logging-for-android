@@ -30,6 +30,7 @@ import com.sensiblelogging.lifecycle.TYPE_FRAGMENT
 import com.sensiblelogging.lifecycle.TYPE_PROCESS
 import com.sensiblelogging.lifecycle.TYPE_SERVICE
 import com.sensiblelogging.lifecycle.processIdentifier
+import com.sensiblelogging.printer.LogCatChannel
 
 fun Int.toLogLevel(): Level =
     when (this) {
@@ -56,19 +57,20 @@ fun Level.toLogPriority(): Int =
  * Should be performed in the onCreate() method of Application lifecycle
  */
 fun Application.registerLifecycleLoggers(
-    processCategory: String = TYPE_PROCESS,
-    activityCategory: String = TYPE_ACTIVITY,
-    fragmentCategory: String = TYPE_FRAGMENT,
+    processCategory: Category = Category(TYPE_PROCESS),
+    activityCategory: Category = Category(TYPE_ACTIVITY),
+    fragmentCategory: Category = Category(TYPE_FRAGMENT),
+    channel: Int = LogCatChannel.ID,
     separator: String = DEFAULT_SEPARATOR
 ) {
-    ProcessLifecycleOwner.get().lifecycle.addObserver(ProcessLifecycleLogger(processCategory, processIdentifier()))
-    this.registerActivityLifecycleCallbacks(ActivityLifecycleLoggingInserter(activityCategory, separator))
-    this.registerActivityLifecycleCallbacks(FragmentLifecycleLoggingInserter(fragmentCategory, separator))
+    ProcessLifecycleOwner.get().lifecycle.addObserver(ProcessLifecycleLogger(processCategory, channel, processIdentifier()))
+    this.registerActivityLifecycleCallbacks(ActivityLifecycleLoggingInserter(activityCategory, channel, separator))
+    this.registerActivityLifecycleCallbacks(FragmentLifecycleLoggingInserter(fragmentCategory, channel, separator))
 }
 
 /**
  * Should be performed in the onCreate() method of Service lifecycle
  */
-fun LifecycleService.registerLifecycleLogger(category: String = TYPE_SERVICE, separator: String = DEFAULT_SEPARATOR) {
-    lifecycle.addObserver(ServiceLifecycleLogger(this, category, separator))
+fun LifecycleService.registerLifecycleLogger(category: Category = Category(TYPE_SERVICE), channel: Int, separator: String = DEFAULT_SEPARATOR) {
+    lifecycle.addObserver(ServiceLifecycleLogger(this, category, channel, separator))
 }

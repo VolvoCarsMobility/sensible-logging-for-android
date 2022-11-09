@@ -26,17 +26,17 @@ abstract class Channel {
 Currently, the library includes `LogCatChannel`, `NotificationChannel` and `StandardOutChannel` (for unit tests).
 
 #### Channel ids
-A channel has a string identifier. You can optionally specify a channel ID in your log statement to also print to that channel.
+A channel has a integer identifier. You can optionally specify a channel ID in your log statement to also print to that channel.
 
 As an example, you can log non-fatal exceptions and messages to your crash reporting service via a `CrashReportingChannel`.
 Using that you can easily log to your crash reporting service from wherever in your code.
 ```kotlin
-    Log.e("Something fatal occurred", exception, "CrashReporting")
+    Log.e("Something fatal occurred", exception, 1 /*LogCat*/)
 ```
 
-While the channel parameter is a string. We recommend organising your channels in one file. Like so:
+While the channel parameter is an integer. We recommend organising your channels in one file, for auto-completeness. Like so:
 ```kotlin
-typealias Channel = String
+typealias Channel = Int
 
 object Channels {
     const val LogCat: Channel = LogCatChannel.id
@@ -78,19 +78,17 @@ Want to know what is going on with your backend? Direct your network client log 
 Similar to channels, the category parameter is a string. Here we also recommend organising your categories in one file. Like so:
 
 ```kotlin
-typealias Category = String
-
 object Categories {
-    const val Default: Category = "Default"
-    const val Analytics: Category = "Analytics"
-    const val Network: Category = "Network"
-    const val Process: Category = "Process"
-    const val Activity: Category = "Activity"
-    const val Service: Category = "Service"
-    const val Fragment: Category = "Fragment"
-    const val RxJava: Category = "RxJava"
-    const val Push: Category = "Push"
-    const val UI: Category = "UI"
+    const val Default = com.sensiblelogging.util.Constants.DEFAULT_CATEGORY
+    const val Analytics = Category("Analytics")
+    const val Network = Category("Network")
+    const val Process = Category("Process")
+    const val Activity = Category("Activity")
+    const val Service = Category("Service")
+    const val Fragment = Category("Fragment")
+    const val RxJava = Category("RxJava")
+    const val Push = Category("Push")
+    const val UI = Category("UI")
 }
 ```
 
@@ -127,12 +125,13 @@ if (BuildConfig.DEBUG) {
 ### Step 2
 ```kotlin
  // Log from your code
- // Passing "Default" as category is optional, if no category is passed default will be used 
- Log.d("Initialising the flux capacitor", Categories.Default)
+ // Passing "Default" as category is optional, if no category is passed, default will be used 
+ // Passing "LogCat" as channel is optional, if no channel is passed, default will be used 
+ Log.d("Initialising the flux capacitor", Categories.Default, Channels.LogCat)
 ```
 
 ### Step 3
-Build your own Channels to solve your project needs
+Build your own Channels, Filters & Formatters to solve your project needs.
 
 For example: you can log non-fatal exceptions to your crash reporting service via a `CrashReportingChannel`.
 The `CrashReportingChannel` can be configured with a `Filter` that only pass the category `"CrashReportingService"`.

@@ -60,7 +60,7 @@ object LogCatFormatterExtended : Formatter {
         line.parameters.takeIf { it.isNotEmpty() }?.entries?.joinToString { "${it.key}=\"${it.value}\"" }
 
     private fun formatCategories(line: Line): String {
-        return line.category.normalizeLength(categoriesMaxLength)
+        return line.category.name.normalizeLength(categoriesMaxLength)
     }
 
     private fun Level.asEmoji() = when (this) {

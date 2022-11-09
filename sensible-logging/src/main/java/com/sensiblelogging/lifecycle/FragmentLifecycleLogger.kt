@@ -22,9 +22,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.sensiblelogging.Category
 import com.sensiblelogging.Log
 
-class FragmentLifecycleLogger(private val category: String, private val separator: String) :
+class FragmentLifecycleLogger(private val category: Category, private val channel: Int, private val separator: String) :
     FragmentManager.FragmentLifecycleCallbacks() {
 
     override fun onFragmentViewCreated(
@@ -106,7 +107,8 @@ class FragmentLifecycleLogger(private val category: String, private val separato
                 TYPE_ACTIVITY to fragment?.activity.identifier().orEmpty(),
                 "method" to method
             ),
-            category
+            category,
+            channel
         )
     }
 

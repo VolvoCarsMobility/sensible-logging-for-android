@@ -25,6 +25,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.Person
+import com.sensiblelogging.Category
 import com.sensiblelogging.Line
 import com.sensiblelogging.Meta
 import com.sensiblelogging.filter.CategoryFilter
@@ -38,7 +39,7 @@ class NotificationChannel constructor(
 ) : Channel() {
 
     companion object {
-        const val id = "NotificationChannel"
+        const val ID = 2
         private const val channelId = "channel_id_log_output"
         fun createNotificationChannel(
             context: Context,
@@ -61,7 +62,7 @@ class NotificationChannel constructor(
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
     }
 
-    override val id: String = Companion.id
+    override val id = ID
 
     private val notificationManager = context.notificationManager()
 
@@ -92,24 +93,28 @@ class NotificationChannel constructor(
         return builder.build()
     }
 
-    private fun String.asNotificationId() = hashCode()
+    private fun Category.asNotificationId() = name.hashCode()
 
     private fun findActiveNotification(notificationId: Int): Notification? {
         return notificationManager
             .activeNotifications.find { it.id == notificationId }?.notification
     }
 
-    private fun getOrCreateStyle(category: String, notificationId: Int): NotificationCompat.MessagingStyle {
+    private fun getOrCreateStyle(
+        category: Category,
+        notificationId: Int
+    ): NotificationCompat.MessagingStyle {
         return findActiveNotification(notificationId)?.let {
             NotificationCompat.MessagingStyle.extractMessagingStyleFromNotification(
                 it
             )
         } ?: NotificationCompat.MessagingStyle(category.asPerson())
             .also {
-                it.conversationTitle = category
+                it.conversationTitle = category.name
             }
     }
 
+    private fun Category.asPerson() = name.asPerson()
     private fun String.asPerson() = Person.Builder()
         .setName(this)
         .setBot(true)

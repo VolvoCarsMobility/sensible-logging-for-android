@@ -23,6 +23,7 @@ import com.sensiblelogging.Meta
 import com.sensiblelogging.filter.Filter
 import com.sensiblelogging.formatter.Formatter
 import com.sensiblelogging.util.Constants
+import java.net.IDN
 
 class LogCatChannel(
     private val formatter: Formatter,
@@ -31,11 +32,11 @@ class LogCatChannel(
 ) : Channel() {
 
     companion object {
-        const val id = "LogCat"
         const val TAG = "Log"
+        const val ID = 1
     }
 
-    override val id: String = Companion.id
+    override val id = ID
 
     override fun print(line: Line, meta: Meta) {
         val formattedMessage = if (line.preFormatted) line.message else formatter.format(line, meta)

@@ -18,13 +18,15 @@ package com.sensiblelogging.lifecycle
 
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
+import com.sensiblelogging.Category
 import com.sensiblelogging.Log
 
 abstract class LifecycleLogger(
     private val identifier: String,
     private val type: String,
     private val separator: String,
-    private val category: String
+    private val category: Category,
+    private val channel: Int
 ) : DefaultLifecycleObserver {
 
     override fun onCreate(owner: LifecycleOwner) {
@@ -58,7 +60,8 @@ abstract class LifecycleLogger(
                 type to identifier,
                 "method" to method
             ),
-            category
+            category,
+            channel
         )
     }
 }

@@ -16,9 +16,11 @@
 
 package com.sensiblelogging.util
 
+import com.sensiblelogging.Category
+
 object Constants {
-    const val DEFAULT_CATEGORY = "Default"
-    internal val DEFAULT_CHANNELS = emptyArray<String>()
+    val DEFAULT_CATEGORY = Category("Default")
+    internal val DEFAULT_CHANNELS = IntArray(0)
     internal val DEFAULT_CHANNEL_LIST = DEFAULT_CHANNELS.asList()
     internal val EMPTY_PARAMS: Map<String, String> = emptyMap()
     internal const val DEFAULT_STACK_DEPTH = 4

@@ -16,6 +16,8 @@
 
 package com.sensiblelogging.filter
 
-class SimpleCategoryFilter(override val categories: List<String>) : CategoryFilter() {
-    constructor(vararg categories: String) : this(categories.toList())
+import com.sensiblelogging.Category
+
+class SimpleCategoryFilter(override val categories: List<Category>) : CategoryFilter() {
+    constructor(category: Category) : this(listOf(category))
 }

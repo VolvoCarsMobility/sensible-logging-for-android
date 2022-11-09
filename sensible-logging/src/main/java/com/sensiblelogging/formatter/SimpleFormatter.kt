@@ -32,7 +32,7 @@ object SimpleFormatter : Formatter {
         val stackTrace = line.throwable?.let {
             " exception[${it.message}]\n${it.stackTraceToString()}"
         } ?: ""
-        return "${dateFormatter.format(Date(line.timestamp))} [${line.level.name}] [${line.category}] ${meta.threadName} ${meta.fileName}:${meta.functionName}    -    ${line.message} ${line.parameters.entries.joinToString { "[${it.key}]:${it.value}" }}$stackTrace"
+        return "${dateFormatter.format(Date(line.timestamp))} [${line.level.name}] [${line.category.name}] ${meta.threadName} ${meta.fileName}:${meta.functionName}    -    ${line.message} ${line.parameters.entries.joinToString { "[${it.key}]:${it.value}" }}$stackTrace"
     }
 
     private fun Throwable.stackTraceToString(): String {
