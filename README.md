@@ -141,18 +141,6 @@ your debug UI. Or provide a shortcut from your app settings to dump the database
 
 Want to control the log categories in runtime? Use the `SharedPreferencesCategoryFilter` with your `LogCatChannel` and enable updating of it from your debug UI.
 
-## Download
-
-```groovy
-repositories {
-  mavenCentral()
-}
-
-dependencies {
-  implementation 'co.m.android:log:x.y.z'
-}
-```
-
 ## Requirements
 
  - `minSdk` is currently set to `16`
