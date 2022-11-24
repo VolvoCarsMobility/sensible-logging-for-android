@@ -77,7 +77,7 @@ Similar to channels, the category parameter is a string. Here we also recommend 
 
 ```kotlin
 object Categories {
-    const val Default = com.sensiblelogging.util.Constants.DEFAULT_CATEGORY
+    const val Default = sh.vcm.sensiblelogging.util.Constants.DEFAULT_CATEGORY
     const val Analytics = Category("Analytics")
     const val Network = Category("Network")
     const val Process = Category("Process")
