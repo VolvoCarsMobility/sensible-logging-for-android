@@ -1,19 +1,15 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'com.vanniktech.maven.publish'
 
 android {
     compileSdkVersion buildVersions.compileSdk
+    namespace = 'sh.vcm.sensiblelogging'
 
     defaultConfig {
 
         minSdkVersion buildVersions.minSdk
-        targetSdkVersion buildVersions.targetSdk
-        compileSdkVersion buildVersions.compileSdk
-        buildToolsVersion buildVersions.buildTools
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
-
     }
 
     buildTypes {
