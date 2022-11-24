@@ -7,7 +7,6 @@ android {
     namespace = 'sh.vcm.sensiblelogging'
 
     defaultConfig {
-
         minSdkVersion buildVersions.minSdk
         consumerProguardFiles "consumer-rules.pro"
     }
