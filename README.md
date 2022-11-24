@@ -30,7 +30,7 @@ A channel has a integer identifier. You can optionally specify a channel ID in y
 As an example, you can log non-fatal exceptions and messages to your crash reporting service via a `CrashReportingChannel`.
 Using that you can easily log to your crash reporting service from wherever in your code.
 ```kotlin
-    Log.e("Something fatal occurred", exception, 1 /*LogCat*/)
+    Log.e("Something fatal occurred", exception, 4 /*CrashReportingChannel*/)
 ```
 
 While the channel parameter is an integer. We recommend organising your channels in one file, for auto-completeness. Like so:
@@ -67,8 +67,7 @@ interface Formatter {
     fun format(line: Line, meta: Meta): String
 }
 ```
-A `Channel` uses a `Formatter` to control the format of the output. The formatter in the screenshot above is called `LogCatFormatterExtended`. 
-If you are directing your output to a file, we recommend using `SimpleFormatter`
+A `Channel` uses a `Formatter` to control the format of the output. If you are directing your output to a file, we recommend using `SimpleFormatter`
 
 ### Categories
 All log statement methods inside `Log` allow the passing of a log category. This can be used to order your statements into high level areas of interest.
@@ -133,7 +132,7 @@ if (BuildConfig.DEBUG) {
 Build your own Channels, Filters & Formatters to solve your project needs.
 
 For example: you can log non-fatal exceptions to your crash reporting service via a `CrashReportingChannel`.
-The `CrashReportingChannel` can be configured with a `Filter` that only pass the category `"CrashReportingService"`.
+The `CrashReportingChannel` can be configured with a `Filter` that only pass a subset of your categories and all logged errors.
 Using that you can easily log to this channel from wherever in your code.
 
 Want persisted logs? Implement a `SQLiteChannel` using your favourite ORM library. You can then display those statements from
