@@ -140,6 +140,21 @@ your debug UI. Or provide a shortcut from your app settings to dump the database
 
 Want to control the log categories in runtime? Use the `SharedPreferencesCategoryFilter` with your `LogCatChannel` and enable updating of it from your debug UI.
 
+Download
+--------
+
+```groovy
+// in your root build.gradle
+repositories {
+  mavenCentral()
+}
+
+// in your app build.gradle
+dependencies {
+  implementation 'sh.vcm.sensiblelogging:sensible-logging:1.0'
+}
+```
+
 ## Requirements
 
  - `minSdk` is currently set to `16`
