@@ -157,7 +157,8 @@ dependencies {
 ## Requirements
 
  - `minSdk` is currently set to `16`
- - This library is currently dependant on `androidx.appcompat` and `androidx.lifecycle` libraries
+ - The base library is only dependant on the Android SDK and kotlin 
+ - The lifecycle extensions is are dependant on `androidx.appcompat` and `androidx.lifecycle` libraries
 
 ## License
 
