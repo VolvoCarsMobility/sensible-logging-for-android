@@ -22,7 +22,7 @@ abstract class Channel {
 }
 ```
 `Log` directs the log statements to `Channel` implementations. Think of Channels as sinks you print your statements to.
-Currently, the library includes `LogCatChannel`, `NotificationChannel` and `StandardOutChannel` (for unit tests).
+Currently, the library includes `LogCatChannel` and `StandardOutChannel` (for unit tests).
 
 #### Channel ids
 A channel has a integer identifier. You can optionally specify a channel ID in your log statement to also print to that channel.
@@ -40,7 +40,6 @@ typealias Channel = Int
 object Channels {
     const val LogCat: Channel = LogCatChannel.ID
     const val CrashReporting: Channel = CrashReportingChannel.ID
-    const val Notification: Channel = NotificationChannel.ID
 }
 
 // then you can autocomplete your way to the channel
