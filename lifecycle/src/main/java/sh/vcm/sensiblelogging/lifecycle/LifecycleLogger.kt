@@ -21,7 +21,7 @@ import androidx.lifecycle.LifecycleOwner
 import sh.vcm.sensiblelogging.Category
 import sh.vcm.sensiblelogging.Log
 
-abstract class LifecycleLogger(
+internal open class LifecycleLogger(
     private val identifier: String,
     private val type: String,
     private val separator: String,

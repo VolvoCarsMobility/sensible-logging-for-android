@@ -24,6 +24,7 @@ import sh.vcm.sensiblelogging.Category
 
 internal const val TYPE_ACTIVITY = "Activity"
 internal const val TYPE_SERVICE = "Service"
+internal const val TYPE_LIFECYCLE = "Lifecycle"
 internal const val TYPE_FRAGMENT = "Fragment"
 internal const val TYPE_PROCESS = "Process"
 internal fun Activity?.identifier(): String = this?.javaClass?.simpleName ?: ""
