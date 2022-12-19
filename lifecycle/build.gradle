@@ -4,7 +4,7 @@ apply plugin: 'com.vanniktech.maven.publish'
 
 android {
     compileSdkVersion buildVersions.compileSdk
-    namespace = 'sh.vcm.sensiblelogging'
+    namespace = 'sh.vcm.sensiblelogging.lifecycle'
 
     defaultConfig {
         minSdkVersion buildVersions.minSdk
@@ -31,5 +31,10 @@ android {
 }
 
 dependencies {
+    implementation project(":sensible-logging")
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$lib_versions.kotlin"
+    implementation "androidx.appcompat:appcompat:$lib_versions.x_appcompat"
+    implementation "androidx.lifecycle:lifecycle-process:$lib_versions.x_lifecycle"
+    implementation "androidx.lifecycle:lifecycle-service:$lib_versions.x_lifecycle"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lib_versions.x_lifecycle"
 }
