@@ -16,6 +16,13 @@
 package sh.vcm.sensiblelogging
 
 import sh.vcm.sensiblelogging.channel.Channel
+import sh.vcm.sensiblelogging.channel.LogCatChannel
+import sh.vcm.sensiblelogging.channel.StandardOutChannel
+import sh.vcm.sensiblelogging.filter.AllowAllFilter
+import sh.vcm.sensiblelogging.filter.Filter
+import sh.vcm.sensiblelogging.formatter.Formatter
+import sh.vcm.sensiblelogging.formatter.LogCatFormatterExtended
+import sh.vcm.sensiblelogging.formatter.SimpleFormatter
 import sh.vcm.sensiblelogging.processor.LogProcessor
 import sh.vcm.sensiblelogging.util.Constants.DEFAULT_CATEGORY
 import sh.vcm.sensiblelogging.util.Constants.DEFAULT_CHANNELS
@@ -198,12 +205,62 @@ object Log {
     ) = processor.log(level, message, preFormattedMessage, category, channels, throwable, parameters, stackDepth)
 
     @JvmStatic
+    @Deprecated("Method moved into Log.Setup")
     fun addChannels(vararg channels: Channel) {
         processor.addChannels(channels.toList())
     }
 
     @JvmStatic
+    @Deprecated("Method moved into Log.Setup")
     fun removeChannels(vararg channels: Channel) {
-        processor.removeChannels(channels.toList())
+        processor.removeChannels(channels.toSet())
+    }
+
+    object Setup {
+        @JvmStatic
+        fun addChannels(vararg channels: Channel) {
+            processor.addChannels(channels.toList())
+        }
+
+        @JvmStatic
+        fun removeChannels(vararg channels: Channel) {
+            processor.removeChannels(channels.toSet())
+        }
+
+        @JvmStatic
+        fun clearChannels() {
+            processor.clearChannels()
+        }
+
+        class Configuration {
+            private val printers = mutableListOf<Channel>()
+
+            fun addLogCatChannel(
+                filter: Filter = AllowAllFilter,
+                formatter: Formatter = LogCatFormatterExtended,
+                default: Boolean = true
+            ): Configuration {
+                printers += LogCatChannel(formatter, filter, default)
+                return this
+            }
+
+            fun addStandardOutChannel(
+                filter: Filter = AllowAllFilter,
+                formatter: Formatter = SimpleFormatter,
+                default: Boolean = false
+            ): Configuration {
+                printers += StandardOutChannel(formatter, filter, default)
+                return this
+            }
+
+            fun addChannel(channel: Channel): Configuration {
+                printers += channel
+                return this
+            }
+
+            fun create() {
+                processor.addChannels(printers)
+            }
+        }
     }
 }
