@@ -110,7 +110,7 @@ if (BuildConfig.DEBUG) {
         LogCatChannel(Formatter.logCatExtended(), logFilter, default = true)
     )
 
-    // optionally opt-in to logging out Process, Activity and Fragment lifecycle methods
+    // optionally opt-in to logging out Process, Activity and Fragment lifecycle methods from the :lifecycle dependency
     registerLifecycleLoggers(
         processCategory = Categories.Process,
         activityCategory = Categories.Activity,
@@ -151,13 +151,14 @@ repositories {
 // in your app build.gradle
 dependencies {
   implementation 'sh.vcm.sensiblelogging:sensible-logging:1.0.0'
+  implementation 'sh.vcm.sensiblelogging:lifecycle:1.0.0' // not yet published
 }
 ```
 
 ## Requirements
 
  - `minSdk` is currently set to `16`
- - The base library is only dependant on the Android SDK and kotlin 
+ - The base library is only dependant on the Android SDK and kotlin stdlib
  - The lifecycle extensions is are dependant on `androidx.appcompat` and `androidx.lifecycle` libraries
 
 ## License
