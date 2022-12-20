@@ -24,7 +24,7 @@ import sh.vcm.sensiblelogging.util.LogUtil
 
 internal class LogProcessor {
 
-    private var channels = ArrayList<Channel>()
+    private val channels = ArrayList<Channel>()
 
     @Volatile
     private var channelsArray = emptyArray<Channel>()
@@ -36,9 +36,16 @@ internal class LogProcessor {
         }
     }
 
-    fun removeChannels(channels: List<Channel>) {
+    fun removeChannels(channels: Set<Channel>) {
         synchronized(this.channels) {
-            this.channels.removeAll(channels)
+            this.channels.removeAll(channels.toSet())
+            channelsArray = this.channels.toTypedArray()
+        }
+    }
+
+    fun clearChannels() {
+        synchronized(this.channels) {
+            channels.clear()
             channelsArray = this.channels.toTypedArray()
         }
     }

@@ -84,6 +84,7 @@ object Categories {
     const val Service = Category("Service")
     const val Fragment = Category("Fragment")
     const val RxJava = Category("RxJava")
+    const val FluxCapacitorFeature = Category("FluxCapacitorFeature")
     const val Push = Category("Push")
     const val UI = Category("UI")
 }
@@ -94,21 +95,20 @@ object Categories {
 ### Step 1
 
 ```kotlin
-if (BuildConfig.DEBUG) {
+    if (BuildConfig.DEBUG) {
     // Sane defaults filter
-    val logFilter = Filter.level(Level.ERROR) or Filter.categories(
-        listOf(
-            Categories.Default,
-            Categories.Process,
-            Categories.Service,
-            // add more categories here
-        )
-    )
-
-    // attach your printers to the Log framework
-    Log.addChannels(
-        LogCatChannel(Formatter.logCatExtended(), logFilter, default = true)
-    )
+    val categoriesFilter = Filter.categories(listOf(
+        Categories.Network,
+        Categories.FluxCapacitorFeature,
+        Categories.Process,
+        Categories.Activity,
+        Categories.Fragment
+    ))
+    val filterCombination = Filter.level(Level.WARN) or categoriesFilter
+    Log.Setup.Configuration()
+        .addLogCatChannel(filterCombination)
+        .addChannel(CrashReportingChannel(filter = Filter.level(Level.ERROR), default = false))
+        .create()
 
     // optionally opt-in to logging out Process, Activity and Fragment lifecycle methods from the :lifecycle dependency
     registerLifecycleLoggers(
