@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.1.0] - 2022-12-22
+
  - Adopted `LogCatFormatterExtended` to new LogCat window in Android Studio
  - Lifecycle logging is now in a separate package
    - BREAKING: the lifecycle extension moved to `sh.vcm.sensiblelogging.lifecycle` package

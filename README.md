@@ -151,8 +151,8 @@ repositories {
 
 // in your app build.gradle
 dependencies {
-  implementation 'sh.vcm.sensiblelogging:sensible-logging:1.0.0'
-  implementation 'sh.vcm.sensiblelogging:lifecycle:1.0.0' // not yet published
+  implementation 'sh.vcm.sensiblelogging:sensible-logging:1.1.0'
+  implementation 'sh.vcm.sensiblelogging:lifecycle:1.1.0'
 }
 ```
 
