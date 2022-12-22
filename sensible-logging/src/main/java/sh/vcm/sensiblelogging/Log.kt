@@ -218,8 +218,8 @@ object Log {
 
     object Setup {
         @JvmStatic
-        fun addChannels(vararg channels: Channel) {
-            processor.addChannels(channels.toList())
+        fun addChannels(channels: List<Channel>) {
+            processor.addChannels(channels)
         }
 
         @JvmStatic
@@ -233,14 +233,14 @@ object Log {
         }
 
         class Configuration {
-            private val printers = mutableListOf<Channel>()
+            private val channels = mutableListOf<Channel>()
 
             fun addLogCatChannel(
                 filter: Filter = AllowAllFilter,
                 formatter: Formatter = LogCatFormatterExtended,
                 default: Boolean = true
             ): Configuration {
-                printers += LogCatChannel(formatter, filter, default)
+                channels += LogCatChannel(formatter, filter, default)
                 return this
             }
 
@@ -249,17 +249,17 @@ object Log {
                 formatter: Formatter = SimpleFormatter,
                 default: Boolean = false
             ): Configuration {
-                printers += StandardOutChannel(formatter, filter, default)
+                channels += StandardOutChannel(formatter, filter, default)
                 return this
             }
 
             fun addChannel(channel: Channel): Configuration {
-                printers += channel
+                channels += channel
                 return this
             }
 
-            fun create() {
-                processor.addChannels(printers)
+            fun create(): List<Channel> {
+                return channels
             }
         }
     }
