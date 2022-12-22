@@ -98,6 +98,7 @@ object Categories {
     if (BuildConfig.DEBUG) {
     // Sane defaults filter
     val categoriesFilter = Filter.categories(listOf(
+        Categories.Default,
         Categories.Network,
         Categories.FluxCapacitorFeature,
         Categories.Process,
@@ -105,10 +106,10 @@ object Categories {
         Categories.Fragment
     ))
     val filterCombination = Filter.level(Level.WARN) or categoriesFilter
-    Log.Setup.Configuration()
-        .addLogCatChannel(filterCombination)
-        .addChannel(CrashReportingChannel(filter = Filter.level(Level.ERROR), default = false))
+    val channels = Log.Setup.Configuration()
+        .addLogCatChannel(filter = filterCombination, default = true)
         .create()
+    Log.Setup.addChannels(channels)
 
     // optionally opt-in to logging out Process, Activity and Fragment lifecycle methods from the :lifecycle dependency
     registerLifecycleLoggers(
