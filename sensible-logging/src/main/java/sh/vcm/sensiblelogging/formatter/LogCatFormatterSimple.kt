@@ -20,7 +20,7 @@ import sh.vcm.sensiblelogging.Line
 import sh.vcm.sensiblelogging.Meta
 
 object LogCatFormatterSimple : Formatter {
-    override fun format(line: Line, meta: Meta): String {
+    override fun format(line: Line, meta: Meta?): String {
         return "${line.message} ${line.parameters.entries.joinToString { "[${it.key}]:${it.value}" }}"
     }
 }

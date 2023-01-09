@@ -26,8 +26,13 @@ object LogCatFormatterExtended : Formatter {
     private const val fileAndFunctionMaxLength = 32
     private const val messageMaxLength = 64
 
-    override fun format(line: Line, meta: Meta): String =
-        "${formatCategories(line)} -- ${threadName(meta)} : ${fileAndFunction(meta)} : ${message(line, line.parameters.isNotEmpty())}${formatParameters(line)?.let { " : $it" } ?: ""}"
+    override fun format(line: Line, meta: Meta?): String {
+        return if(meta != null) {
+            "${formatCategories(line)} -- ${threadName(meta)} : ${fileAndFunction(meta)} : ${message(line, line.parameters.isNotEmpty())}${formatParameters(line)?.let { " : $it" } ?: ""}"
+        } else {
+            "${formatCategories(line)} -- ${message(line, line.parameters.isNotEmpty())}${formatParameters(line)?.let { " : $it" } ?: ""}"
+        }
+    }
 
     private fun message(line: Line, normalizeLength: Boolean) =
         if (normalizeLength) line.message.normalizeLength(messageMaxLength) else line.message

@@ -20,7 +20,7 @@ import sh.vcm.sensiblelogging.Line
 import sh.vcm.sensiblelogging.Meta
 
 interface Formatter {
-    fun format(line: Line, meta: Meta): String
+    fun format(line: Line, meta: Meta?): String
 
     companion object {
         fun logCatSimple(): Formatter = LogCatFormatterSimple
