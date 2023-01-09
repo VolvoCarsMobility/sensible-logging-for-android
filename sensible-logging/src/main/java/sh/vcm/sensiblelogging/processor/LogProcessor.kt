@@ -20,6 +20,8 @@ import sh.vcm.sensiblelogging.Category
 import sh.vcm.sensiblelogging.Level
 import sh.vcm.sensiblelogging.Line
 import sh.vcm.sensiblelogging.channel.Channel
+import sh.vcm.sensiblelogging.channel.DebugChannel
+import sh.vcm.sensiblelogging.channel.ReleaseChannel
 import sh.vcm.sensiblelogging.util.LogUtil
 
 internal class LogProcessor {
@@ -70,10 +72,19 @@ internal class LogProcessor {
             parameters
         )
         if (channelsArray.any { it.filter.matches(line) }) {
-            val meta = LogUtil.gatherMeta(stackDepth)
-            channelsArray
+            channelsArray.filterIsInstance<DebugChannel>()
                 .filter { it.default || channels.contains(it.id) }
-                .forEach { it.printFiltered(line, meta) }
+                .takeIf { it.isNotEmpty() }
+                ?.let { debugChannels ->
+                    val meta = LogUtil.gatherMeta(stackDepth)
+                    debugChannels.forEach { channel ->
+                        channel.printFiltered(line, meta)
+                    }
+                }
+            channelsArray
+                .filterIsInstance<ReleaseChannel>()
+                .filter { it.default || channels.contains(it.id) }
+                .forEach { it.printFiltered(line) }
         }
     }
 }
