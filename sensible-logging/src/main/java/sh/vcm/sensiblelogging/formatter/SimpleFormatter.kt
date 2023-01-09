@@ -28,11 +28,15 @@ object SimpleFormatter : Formatter {
 
     private val dateFormatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.ENGLISH)
 
-    override fun format(line: Line, meta: Meta): String {
+    override fun format(line: Line, meta: Meta?): String {
         val stackTrace = line.throwable?.let {
             " exception[${it.message}]\n${it.stackTraceToString()}"
         } ?: ""
-        return "${dateFormatter.format(Date(line.timestamp))} [${line.level.name}] [${line.category.name}] ${meta.threadName} ${meta.fileName}:${meta.functionName}    -    ${line.message} ${line.parameters.entries.joinToString { "[${it.key}]:${it.value}" }}$stackTrace"
+        return if (meta != null){
+            "${dateFormatter.format(Date(line.timestamp))} [${line.level.name}] [${line.category.name}] ${meta.threadName} ${meta.fileName}:${meta.functionName}    -    ${line.message} ${line.parameters.entries.joinToString { "[${it.key}]:${it.value}" }}$stackTrace"
+        } else {
+            "${dateFormatter.format(Date(line.timestamp))} [${line.level.name}] [${line.category.name}]    -    ${line.message} ${line.parameters.entries.joinToString { "[${it.key}]:${it.value}" }}$stackTrace"
+        }
     }
 
     private fun Throwable.stackTraceToString(): String {
