@@ -32,4 +32,6 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$lib_versions.kotlin"
+    testImplementation "junit:junit:$lib_versions.junit"
+    testImplementation "org.robolectric:robolectric:$lib_versions.robolectric"
 }

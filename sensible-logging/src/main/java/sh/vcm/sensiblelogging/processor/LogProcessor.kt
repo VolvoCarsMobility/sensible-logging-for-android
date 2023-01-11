@@ -20,9 +20,8 @@ import sh.vcm.sensiblelogging.Category
 import sh.vcm.sensiblelogging.Level
 import sh.vcm.sensiblelogging.Line
 import sh.vcm.sensiblelogging.channel.Channel
-import sh.vcm.sensiblelogging.channel.DebugChannel
 import sh.vcm.sensiblelogging.channel.ReleaseChannel
-import sh.vcm.sensiblelogging.util.LogUtil
+import sh.vcm.sensiblelogging.util.MetaDataFactory
 
 internal class LogProcessor {
 
@@ -63,28 +62,30 @@ internal class LogProcessor {
         stackDepth: Int
     ) {
         val line = Line(
-            System.currentTimeMillis(),
-            category,
-            level,
-            message,
-            preFormattedMessage,
-            throwable,
-            parameters
+            timestamp = System.currentTimeMillis(),
+            category = category,
+            level = level,
+            message = message,
+            preFormatted = preFormattedMessage,
+            throwable = throwable,
+            parameters = parameters
         )
-        if (channelsArray.any { it.filter.matches(line) }) {
-            channelsArray.filterIsInstance<DebugChannel>()
-                .filter { it.default || channels.contains(it.id) }
-                .takeIf { it.isNotEmpty() }
-                ?.let { debugChannels ->
-                    val meta = LogUtil.gatherMeta(stackDepth)
-                    debugChannels.forEach { channel ->
-                        channel.printFiltered(line, meta)
+        channelsArray
+            .filter { channel -> channel.default || channels.contains(channel.id) }
+            .let { channelList ->
+                channelList
+                    .filterIsInstance<ReleaseChannel>()
+                    .forEach { it.printFiltered(line) }
+                channelList
+                    .filterNot { it is ReleaseChannel }
+                    .takeIf { it.isNotEmpty() }
+                    ?.let { debugChannels ->
+                        val meta = MetaDataFactory.create(stackDepth)
+                        debugChannels.forEach { channel ->
+                            channel.printFiltered(line, meta)
+                        }
                     }
-                }
-            channelsArray
-                .filterIsInstance<ReleaseChannel>()
-                .filter { it.default || channels.contains(it.id) }
-                .forEach { it.printFiltered(line) }
-        }
+            }
+
     }
 }

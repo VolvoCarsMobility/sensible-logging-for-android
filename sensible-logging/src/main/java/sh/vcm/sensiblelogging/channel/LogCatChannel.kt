@@ -27,7 +27,7 @@ class LogCatChannel(
     private val formatter: Formatter,
     override val filter: Filter,
     override val default: Boolean = true,
-) : DebugChannel() {
+) : Channel() {
 
     companion object {
         const val TAG = "Log"
