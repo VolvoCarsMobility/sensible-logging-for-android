@@ -18,8 +18,8 @@ package sh.vcm.sensiblelogging.util
 
 import sh.vcm.sensiblelogging.Meta
 
-object LogUtil {
-    fun gatherMeta(stackDepth: Int): Meta {
+object MetaDataFactory {
+    fun create(stackDepth: Int): Meta {
         val element = Throwable().stackTrace[stackDepth]
         return Meta(
             className = element.className,
