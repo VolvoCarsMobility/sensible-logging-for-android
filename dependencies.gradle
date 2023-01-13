@@ -7,6 +7,8 @@ def versions = [:]
 versions.kotlin = "1.6.10"
 versions.x_lifecycle = "2.4.1"
 versions.x_appcompat = "1.4.1"
+versions.junit = "4.13.2"
+versions.robolectric = "4.9.2"
 ext.lib_versions = versions
 
 def buildVersions = [:]
