@@ -26,7 +26,7 @@ class StandardOutChannel(
     private val formatter: Formatter,
     override val filter: Filter,
     override val default: Boolean = false,
-) : Channel() {
+) : DebugChannel() {
 
     companion object {
         const val ID = 3
