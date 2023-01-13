@@ -20,6 +20,7 @@ import sh.vcm.sensiblelogging.Category
 import sh.vcm.sensiblelogging.Level
 import sh.vcm.sensiblelogging.Line
 import sh.vcm.sensiblelogging.channel.Channel
+import sh.vcm.sensiblelogging.channel.DebugChannel
 import sh.vcm.sensiblelogging.channel.ReleaseChannel
 import sh.vcm.sensiblelogging.util.MetaDataFactory
 
@@ -77,7 +78,7 @@ internal class LogProcessor {
                     .filterIsInstance<ReleaseChannel>()
                     .forEach { it.printFiltered(line) }
                 channelList
-                    .filterNot { it is ReleaseChannel }
+                    .filterIsInstance<DebugChannel>()
                     .takeIf { it.isNotEmpty() }
                     ?.let { debugChannels ->
                         val meta = MetaDataFactory.create(stackDepth)

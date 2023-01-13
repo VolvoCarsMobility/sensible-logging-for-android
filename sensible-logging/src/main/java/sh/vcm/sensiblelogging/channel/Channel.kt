@@ -24,7 +24,9 @@ abstract class Channel {
     abstract val filter: Filter
     abstract val id: Int
     abstract val default: Boolean
+}
 
+abstract class DebugChannel : Channel() {
     fun printFiltered(line: Line, meta: Meta) {
         if (filter.matches(line)) {
             print(line, meta)
