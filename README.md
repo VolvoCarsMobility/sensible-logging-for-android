@@ -14,15 +14,13 @@ The `Log` class is the main interaction point of this library.
 Inside it you will find the familiar log statement methods such as `Log.d()`
 
 ### Channels
-```kotlin
-abstract class Channel {
-    //...
-    abstract val id: Int
-    abstract fun print(line: Line, meta: Meta)
-}
-```
 `Log` directs the log statements to `Channel` implementations. Think of Channels as sinks you print your statements to.
 Currently, the library includes `LogCatChannel` and `StandardOutChannel` (for unit tests).
+
+Depending on your use-case, either implement a subtype of `ReleaseChannel` or `DebugChannel`.
+
+ - DebugChannels are meant to be used during development. They include metadata about the log-statement such as thread-name and function the statement was printed from. 
+ - ReleaseChannels are safe to use in release builds.
 
 #### Channel ids
 A channel has a integer identifier. You can optionally specify a channel ID in your log statement to also print to that channel.
@@ -63,7 +61,7 @@ If you don't care about filters, you can pass the `AllowAllFilter` to your `Chan
 ### Formatters
 ```kotlin
 interface Formatter {
-    fun format(line: Line, meta: Meta): String
+    fun format(line: Line, meta: Meta?): String
 }
 ```
 A `Channel` uses a `Formatter` to control the format of the output. If you are directing your output to a file, we recommend using `SimpleFormatter`

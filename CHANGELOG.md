@@ -1,6 +1,11 @@
 # Change log
 
 ## [Unreleased]
+ 
+ - Channel now has two subtypes; `ReleaseChannel` and `DebugChannel`
+   - Motivation: `Meta` is captured using `Throwable.stacktrace`. This may impact performance negatively.
+   - `ReleaseChannel` no longer have `Meta` passed to it's `print()` method and it can be used in Release builds.
+   - `Meta` parameter in `Formatter.format()` method is now nullable.
 
 ## [1.1.0] - 2022-12-22
 
