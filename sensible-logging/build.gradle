@@ -20,6 +20,9 @@ android {
 
     testOptions {
         unitTests.returnDefaultValues = true
+        unitTests.all {
+            useJUnitPlatform()
+        }
     }
 
     lintOptions {
@@ -32,6 +35,8 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$lib_versions.kotlin"
-    testImplementation "junit:junit:$lib_versions.junit"
-    testImplementation "org.robolectric:robolectric:$lib_versions.robolectric"
+    //testImplementation "junit:junit:$lib_versions.junit"
+    testImplementation "io.mockk:mockk:$lib_versions.mockk"
+    testImplementation(platform("org.junit:junit-bom:$lib_versions.junit"))
+    testImplementation('org.junit.jupiter:junit-jupiter')
 }

@@ -62,23 +62,25 @@ internal class LogProcessor {
         parameters: Map<String, String>,
         stackDepth: Int
     ) {
-        val line = Line(
-            timestamp = System.currentTimeMillis(),
-            category = category,
-            level = level,
-            message = message,
-            preFormatted = preFormattedMessage,
-            throwable = throwable,
-            parameters = parameters
-        )
         channelsArray
             .filter { channel -> channel.default || channels.contains(channel.id) }
-            .let { channelList ->
+            .takeIf { it.isNotEmpty() }
+            ?.let { channelList ->
+                val line = Line(
+                    timestamp = System.currentTimeMillis(),
+                    category = category,
+                    level = level,
+                    message = message,
+                    preFormatted = preFormattedMessage,
+                    throwable = throwable,
+                    parameters = parameters
+                )
                 channelList
                     .filterIsInstance<ReleaseChannel>()
                     .forEach { it.printFiltered(line) }
                 channelList
                     .filterIsInstance<DebugChannel>()
+                    .filter { it.filter.matches(line) }
                     .takeIf { it.isNotEmpty() }
                     ?.let { debugChannels ->
                         val meta = MetaDataFactory.create(stackDepth)
