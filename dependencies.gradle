@@ -4,9 +4,9 @@
  **/
 ext.lib_versions = [:]
 def versions = [:]
-versions.kotlin = "1.6.10"
-versions.x_lifecycle = "2.4.1"
-versions.x_appcompat = "1.4.1"
+versions.kotlin = "1.7.20"
+versions.x_lifecycle = "2.5.1"
+versions.x_appcompat = "1.6.0"
 versions.junit = "5.9.2"
 versions.mockk = "1.13.3"
 ext.lib_versions = versions
