@@ -19,8 +19,8 @@ Currently, the library includes `LogCatChannel` and `StandardOutChannel` (for un
 
 Depending on your use-case, either implement a subtype of `ReleaseChannel` or `DebugChannel`.
 
- - DebugChannels are meant to be used during development. They include metadata about the log-statement such as thread-name and function the statement was printed from. 
- - ReleaseChannels are safe to use in release builds.
+ - `DebugChannel`s are meant to be used during development. They include metadata about the log-statement such as thread-name and function the statement was printed from. It does this using `Throwable().stackTrace`. Be aware that it can have negative impact to performance, so default to only use it in debug builds.
+ - `ReleaseChannel`s are safe to use in release builds.
 
 #### Channel ids
 A channel has a integer identifier. You can optionally specify a channel ID in your log statement to also print to that channel.
