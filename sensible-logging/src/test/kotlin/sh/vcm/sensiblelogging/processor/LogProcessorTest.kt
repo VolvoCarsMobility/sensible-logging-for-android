@@ -36,7 +36,7 @@ internal class LogProcessorTest {
         every { releaseChannel.id } returns 1
         every { debugChannel.id } returns 2
 
-        every { releaseChannel.default } returns true
+        every { releaseChannel.default } returns false
         every { debugChannel.default } returns true
 
         every { releaseChannel.printFiltered(any()) } just runs
@@ -51,6 +51,7 @@ internal class LogProcessorTest {
     @Test
     internal fun `should not create debug metadata when theres no DebugChannel`() {
         // GIVEN
+        every { releaseChannel.default } returns true
         underTest.addChannels(listOf(releaseChannel))
 
         // WHEN
@@ -153,5 +154,27 @@ internal class LogProcessorTest {
         assertEquals(line.level, Level.DEBUG)
         assertEquals(line.message, "Something happened")
         assertEquals(meta.simpleClassName, "SomeClass")
+    }
+
+    @Test
+    internal fun `should pass to a specific channel when its id is used`() {
+        // GIVEN
+        underTest.addChannels(listOf(releaseChannel))
+        every { releaseChannel.filter } returns permissiveFilter
+
+        // WHEN
+        underTest.log(
+            Level.DEBUG,
+            "Something happened",
+            false,
+            category,
+            listOf(1),
+            null,
+            emptyMap(),
+            Constants.DEFAULT_STACK_DEPTH
+        )
+
+        // THEN
+        verify(exactly = 1) { releaseChannel.printFiltered(any()) }
     }
 }
