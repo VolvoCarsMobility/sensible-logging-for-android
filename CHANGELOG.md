@@ -1,6 +1,8 @@
 # Change log
 
 ## [Unreleased]
+
+## [1.2.0] - 2023-01-25
  
  - *BREAKING*: Channel now has two subtypes; `ReleaseChannel` and `DebugChannel`.
    - Motivation: `Meta` is captured using `Throwable.stacktrace`. This may impact performance negatively.
