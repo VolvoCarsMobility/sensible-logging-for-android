@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [1.2.1] - 2023-09-22
+
+ - Maintenance release with updated dependencies
+
 ## [1.2.0] - 2023-01-25
  
  - *BREAKING*: Channel now has two subtypes; `ReleaseChannel` and `DebugChannel`.
