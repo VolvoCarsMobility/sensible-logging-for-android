@@ -4,16 +4,16 @@
  **/
 ext.lib_versions = [:]
 def versions = [:]
-versions.kotlin = "1.7.20"
-versions.x_lifecycle = "2.5.1"
-versions.x_appcompat = "1.6.0"
+versions.kotlin = "1.8.21"
+versions.x_lifecycle = "2.6.2"
+versions.x_appcompat = "1.6.1"
+versions.android_library_plugin = "7.1.2"
 versions.junit = "5.9.2"
 versions.mockk = "1.13.3"
 ext.lib_versions = versions
 
 def buildVersions = [:]
 buildVersions.minSdk = 16
-buildVersions.targetSdk = 30
-buildVersions.compileSdk = 31
-buildVersions.buildTools = "30.0.2"
+buildVersions.targetSdk = 33
+buildVersions.compileSdk = 33
 ext.buildVersions = buildVersions
