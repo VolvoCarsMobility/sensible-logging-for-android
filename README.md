@@ -55,6 +55,10 @@ object Channels {
 // then you can autocomplete your way to the channel
 Log.e("Something fatal occurred", exception, Channels.CrashReporting)
 ```
+#### Default channels
+During setup, you can mark a Channel as default. Log statements are always forwarded to default channels, meaning you don't have to specify them explicitly in your log statements.
+
+An example where this is useful; you can mark the LogCat channel as default in a debug build, but not in a release build.
 
 ### Filters
 ```kotlin
