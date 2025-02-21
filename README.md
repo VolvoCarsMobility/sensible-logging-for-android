@@ -2,10 +2,6 @@
 Sensible logging for Android aim to provide no-nonsense logging API that is easily extended. 
 The goal of this library is *not* to be rich in features, but to provide a stable baseline for you to build on in your own projects.
 
-> *"The members of the android guild at Volvo Car Mobility had different needs for logging. Some enjoy a nice and clean LogCat log while others like a more verbose approach to logging.*
->
->*With **Sensible logging for Android** we satisfied both of those needs."*
-
 ## Core concepts
 The library consists of a few fundamental elements:
 
