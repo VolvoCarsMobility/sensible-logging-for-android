@@ -1,5 +1,5 @@
 ![header-image](header.png)
-Sensible logging for Android aim to provide no-nonsense logging API that is easily extended. 
+Sensible logging for Android aim to provide no-nonsense logging frontend API that is easily extended. 
 The goal of this library is *not* to be rich in features, but to provide a stable baseline for you to build on in your own projects.
 
 ## Core concepts
@@ -8,6 +8,10 @@ The library consists of a few fundamental elements:
 ### Log class
 The `Log` class is the main interaction point of this library. 
 Inside it you will find the familiar log statement methods such as `Log.d()`
+ ```kotlin
+ Log.d("Initialising the flux capacitor", Categories.UI, Channels.CrashReporting)
+```
+
 
 ### Channels
 `Log` directs the log statements to `Channel` implementations. Think of Channels as sinks you print your statements to.
